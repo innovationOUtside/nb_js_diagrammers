@@ -27,7 +27,7 @@ Install the magics in a notebook as:
 
 `%load_ext nb_js_diagrammers`
 
-You can then generate diagrams using the approriate diagram syntax and magic:
+You can then generate diagrams using the appropriate diagram syntax and magic:
 
 ```text
 %%flowchart_magic -h 100
@@ -54,6 +54,19 @@ op2(path2, right)->e
 ```
 
 ![](images/js_diag_magic_wavedrom.png)
+
+```text
+%%mermaid_magic -h 500
+
+flowchart TD
+    A[Start] --> B{Is it?};
+    B -->|Yes| C[OK];
+    C --> D[Rethink];
+    D --> B;
+    B ---->|No| E[End];
+```
+
+![](images/js_diag_magic_mermaid0.png)
 
 ```text
 %%mermaid_magic -h 250
