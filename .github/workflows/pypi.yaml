@@ -1,0 +1,34 @@
+name: Publish Python distributions to PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Push to pypi' 
+jobs:
+  build-n-publish:
+    name: Build and publish Python distribution to PyPI
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+        
+    - name: Build a binary wheel and a source tarball
+      run: |
+        python3 -m pip install --user --upgrade setuptools wheel
+        python3 setup.py sdist bdist_wheel
+    - name: Publish distribution to PyPI
+      # if: startsWith(github.event.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.pypi_password }}
