@@ -115,6 +115,44 @@ erDiagram
 
 ![](images/js_diag_magicwavesurfer.png)
 
+## Generating Flwocharts from Python Code
+
+An additional magic is provided that uses the [`pyflowchart`](https://github.com/cdfmlr/pyflowchart/) package to generate a flowchart describing Python code cell in an appropriately magicked code cell:
+
+```text
+%%pyflowchart_magic -h 800
+import time
+
+def demo(msg='demo'):
+    for i in range(10):
+        print(f'{msg} loopcount is {i}')
+        time.sleep(i)
+```
+
+A downside of this approach is that the code is not executed. However, we can also grab and chart code from an executed code cell using the following recipe (this captures cell content from the previously executed cell):
+
+```python
+%%capture code
+# This gets the content of the previous cell
+# and stores it in the variable: code
+%history -l 1
+```
+
+We can then render a flowchart from the captured code cell content:
+
+```python
+from pyflowchart import Flowchart
+
+from nb_js_diagrammers.flowchartjs import TEMPLATE_FLOWCHARTJS
+from nb_js_diagrammers.magics import js_ui
+
+# Generate a flowchart from the grabbed code
+fc = Flowchart.from_code(code.stdout)
+
+# Render the flowchart
+js_ui({"src":fc.flowchart()}, TEMPLATE_FLOWCHARTJS, height=800)
+```
+
 ## Generating Static Image Files
 
 To generate static image files using `mermaid.js`, see: https://github.com/mermaid-js/mermaid-cli

@@ -11,6 +11,7 @@ from .wavedrom import TEMPLATE_WAVEDROM
 from .wavesurfer import TEMPLATE_WAVESURFERJS
 from .mermaid import TEMPLATE_MERMAIDJS
 
+from pyflowchart import Flowchart
  
 def js_ui(data, template, out_fn = None, out_path='.',
           width="100%", height="", **kwargs):
@@ -69,6 +70,17 @@ class JSdiagrammerMagics(Magics):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
         return js_ui({"src":cell}, TEMPLATE_FLOWCHARTJS, height=args.height)
+
+    @cell_magic
+    @magic_arguments.magic_arguments()
+    @magic_arguments.argument(
+        "--height", "-h", default="300", help="IFrame height."
+    )
+    def pyflowchart_magic(self, line, cell):
+        "Render flowchart based on an analysis of Python code in code cell."
+        args = magic_arguments.parse_argstring(self.pyflowchart_magic, line)
+        fc = Flowchart.from_code(cell)
+        return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS, height=args.height)
 
     @cell_magic
     @magic_arguments.magic_arguments()
