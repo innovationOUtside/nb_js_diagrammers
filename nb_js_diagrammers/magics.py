@@ -10,7 +10,7 @@ from .flowchartjs import TEMPLATE_FLOWCHARTJS
 from .wavedrom import TEMPLATE_WAVEDROM
 from .wavesurfer import TEMPLATE_WAVESURFERJS
 from .mermaid import TEMPLATE_MERMAIDJS
-
+from .railroad import TEMPLATE_RAILROADJS
  
 def js_ui(data, template, out_fn = None, out_path='.',
           width="100%", height="", **kwargs):
@@ -50,6 +50,16 @@ class JSdiagrammerMagics(Magics):
             return
         return js_ui({"src":args.file}, TEMPLATE_WAVESURFERJS, height=200)
  
+    @cell_magic
+    @magic_arguments.magic_arguments()
+    @magic_arguments.argument(
+        "--height", "-h", default="300", help="IFrame height."
+    )
+    def railroad_magic(self, line, cell):
+        "Send code to railroad.js."
+        args = magic_arguments.parse_argstring(self.railroad_magic, line)
+        return js_ui({"src":cell}, TEMPLATE_RAILROADJS, height=args.height)
+
     @cell_magic
     @magic_arguments.magic_arguments()
     @magic_arguments.argument(
