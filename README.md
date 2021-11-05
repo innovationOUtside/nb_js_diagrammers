@@ -132,7 +132,9 @@ def demo(msg='demo'):
         time.sleep(i)
 ```
 
-A downside of this approach is that the code is not executed. However, we can also grab and chart code from an executed code cell using the following recipe (this captures cell content from the previously executed cell):
+The `-x / --execute` flag will execute the code in the current notebook scope. *Without the flag, the code is not executed.*
+
+More clunkily, we can also grab and chart code from an executed code cell using the following recipe (this captures cell content from the previously executed cell):
 
 ```python
 %%capture code

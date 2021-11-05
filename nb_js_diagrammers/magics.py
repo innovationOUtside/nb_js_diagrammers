@@ -1,4 +1,4 @@
-from IPython.core.magic import Magics, magics_class, cell_magic, line_cell_magic
+from IPython.core.magic import Magics, magics_class, cell_magic, line_cell_magic, needs_local_scope
 from IPython.core import magic_arguments
 
 import io
@@ -83,9 +83,15 @@ class JSdiagrammerMagics(Magics):
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
-    def pyflowchart_magic(self, line, cell):
+    @magic_arguments.argument(
+        "--execute", "-x", action="store_true", help="Execute code in cell"
+    )
+    @needs_local_scope
+    def pyflowchart_magic(self, line, cell, local_ns=None):
         "Render flowchart based on an analysis of Python code in code cell."
         args = magic_arguments.parse_argstring(self.pyflowchart_magic, line)
+        if args.execute:
+            exec(cell, self.shell.user_ns, local_ns)
         fc = Flowchart.from_code(cell)
         return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
                      height=args.height, out_fn=args.outfile)
