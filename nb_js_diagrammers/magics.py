@@ -41,6 +41,7 @@ class JSdiagrammerMagics(Magics):
  
     @line_cell_magic
     @magic_arguments.magic_arguments()
+    @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
     @magic_arguments.argument(
         "--file", "-f", help="Source for audio file."
     )
@@ -49,30 +50,36 @@ class JSdiagrammerMagics(Magics):
         args = magic_arguments.parse_argstring(self.wavesurfer_magic, line)
         if not args.file:
             return
-        return js_ui({"src":args.file}, TEMPLATE_WAVESURFERJS, height=200)
+        return js_ui({"src":args.file}, TEMPLATE_WAVESURFERJS,
+                     height=200, out_fn=args.outfile)
  
     @cell_magic
     @magic_arguments.magic_arguments()
+    @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
     def mermaid_magic(self, line, cell):
         "Send code to mermaid.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
-        return js_ui({"src":cell}, TEMPLATE_MERMAIDJS, height=args.height)
+        return js_ui({"src":cell}, TEMPLATE_MERMAIDJS,
+                     height=args.height, out_fn=args.outfile)
 
     @cell_magic
     @magic_arguments.magic_arguments()
+    @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
     def flowchart_magic(self, line, cell):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
-        return js_ui({"src":cell}, TEMPLATE_FLOWCHARTJS, height=args.height)
+        return js_ui({"src":cell}, TEMPLATE_FLOWCHARTJS,
+                     height=args.height, out_fn=args.outfile)
 
     @cell_magic
     @magic_arguments.magic_arguments()
+    @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
@@ -80,15 +87,18 @@ class JSdiagrammerMagics(Magics):
         "Render flowchart based on an analysis of Python code in code cell."
         args = magic_arguments.parse_argstring(self.pyflowchart_magic, line)
         fc = Flowchart.from_code(cell)
-        return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS, height=args.height)
+        return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
+                     height=args.height, out_fn=args.outfile)
 
     @cell_magic
     @magic_arguments.magic_arguments()
+    @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
     def wavedrom_magic(self, line, cell):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
-        return js_ui({"src":cell}, TEMPLATE_WAVEDROM, height=args.height)
+        return js_ui({"src":cell}, TEMPLATE_WAVEDROM,
+                     height=args.height, out_fn=args.outfile)
  

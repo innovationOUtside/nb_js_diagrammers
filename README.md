@@ -27,10 +27,13 @@ Install the magics in a notebook as:
 
 `%load_ext nb_js_diagrammers`
 
+
+All magics support a `-o / --outfile` that can be used to specify the name of a generated html file that is then embedded in the notebook via an iframe. If no filename is specified, a filename with a randomly generated UID based will be created.
+ 
 You can then generate diagrams using the appropriate diagram syntax and magic:
 
 ```text
-%%flowchart_magic -h 100
+%%flowchart_magic -h 100 -o flowchart.html
 
 st=>start: Start
 e=>end: End
@@ -115,7 +118,7 @@ erDiagram
 
 ![](images/js_diag_magicwavesurfer.png)
 
-## Generating Flwocharts from Python Code
+## Generating Flowcharts from Python Code
 
 An additional magic is provided that uses the [`pyflowchart`](https://github.com/cdfmlr/pyflowchart/) package to generate a flowchart describing Python code cell in an appropriately magicked code cell:
 
