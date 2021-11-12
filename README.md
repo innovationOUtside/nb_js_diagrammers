@@ -113,7 +113,7 @@ erDiagram
 ![](images/js_diag_magic_mermaid3.png)
 
 ```text
-%wavesurfer_magic -f https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3
+%wavesurfer_magic -fhttps://ia802606.us.archive.org/35/items/shortpoetry_047_librivox/abou_ben_adhem_hunt_mlb.mp3
 ```
 
 ![](images/js_diag_magicwavesurfer.png)
