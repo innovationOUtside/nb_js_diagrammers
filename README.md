@@ -154,8 +154,19 @@ from nb_js_diagrammers.magics import js_ui
 # Generate a flowchart from the grabbed code
 fc = Flowchart.from_code(code.stdout)
 
-# Render the flowchart
-js_ui({"src":fc.flowchart()}, TEMPLATE_FLOWCHARTJS, height=800)
+# Render the flowchart via an external, IFrame embedded HTML page - DEPRECATED
+# (Code in package but commented out)
+#js_ui({"src":fc.flowchart()}, TEMPLATE_FLOWCHARTJS, height=800)
+
+# Render flowchart via repr_html IFrame with html in srcdoc
+diagram = JSDiagram(fc.flowchart()}, TEMPLATE_FLOWCHARTJS, height=200)
+diagram
+```
+
+We can also save the HTML to a file:
+
+```python
+diagram.save_html("myfile.html")
 ```
 
 ## Generating Static Image Files
