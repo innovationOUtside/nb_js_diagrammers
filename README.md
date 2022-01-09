@@ -23,7 +23,7 @@ or:
 
 ## Usage
 
-Install the magics in a notebook as:
+Load the magics into a notebook using:
 
 `%load_ext nb_js_diagrammers`
 
