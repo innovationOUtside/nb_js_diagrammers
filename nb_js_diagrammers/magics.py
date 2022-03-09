@@ -97,6 +97,10 @@ class JSdiagrammerMagics(Magics):
     def __init__(self, shell):
         super(JSdiagrammerMagics, self).__init__(shell)
 
+    def local_file_display(self, outfile, h=300):
+        """Return an IFrame object loading the saved local file."""
+        return IFrame(src=outfile, width="100%", height=h)
+
     @line_cell_magic
     @magic_arguments.magic_arguments()
     @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
@@ -111,6 +115,7 @@ class JSdiagrammerMagics(Magics):
         diagram = JSDiagram({"src":args.file}, TEMPLATE_WAVESURFERJS, height=200)
         if args.outfile:
             diagram.save_html(args.outfile)
+            return self.local_file_display(args.outfile)
         return diagram
         #return js_ui({"src":args.file}, TEMPLATE_WAVESURFERJS,
         #             height=200, out_fn=args.outfile)
@@ -127,6 +132,7 @@ class JSdiagrammerMagics(Magics):
         diagram = JSDiagram({"src":cell}, TEMPLATE_MERMAIDJS, height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
+            return self.local_file_display(args.outfile, args.height) 
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_MERMAIDJS,
         #             height=args.height, out_fn=args.outfile)
@@ -143,6 +149,7 @@ class JSdiagrammerMagics(Magics):
         diagram = JSDiagram({"src":cell}, TEMPLATE_FLOWCHARTJS, height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
+            return self.local_file_display(args.outfile, args.height) 
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_FLOWCHARTJS,
         #             height=args.height, out_fn=args.outfile)
@@ -167,6 +174,7 @@ class JSdiagrammerMagics(Magics):
                             height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
+            return self.local_file_display(args.outfile, args.height) 
         return diagram
         #return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
         #             height=args.height, out_fn=args.outfile)
@@ -184,6 +192,7 @@ class JSdiagrammerMagics(Magics):
                             height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
+            return self.local_file_display(args.outfile, args.height) 
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_WAVEDROM,
         #             height=args.height, out_fn=args.outfile)
