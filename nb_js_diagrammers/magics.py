@@ -109,6 +109,8 @@ class JSdiagrammerMagics(Magics):
         if not args.file:
             return
         diagram = JSDiagram({"src":args.file}, TEMPLATE_WAVESURFERJS, height=200)
+        if args.outfile:
+            diagram.save_html(args.outfile)
         return diagram
         #return js_ui({"src":args.file}, TEMPLATE_WAVESURFERJS,
         #             height=200, out_fn=args.outfile)
@@ -123,6 +125,8 @@ class JSdiagrammerMagics(Magics):
         "Send code to mermaid.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
         diagram = JSDiagram({"src":cell}, TEMPLATE_MERMAIDJS, height=args.height)
+        if args.outfile:
+            diagram.save_html(args.outfile)
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_MERMAIDJS,
         #             height=args.height, out_fn=args.outfile)
@@ -137,6 +141,8 @@ class JSdiagrammerMagics(Magics):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
         diagram = JSDiagram({"src":cell}, TEMPLATE_FLOWCHARTJS, height=args.height)
+        if args.outfile:
+            diagram.save_html(args.outfile)
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_FLOWCHARTJS,
         #             height=args.height, out_fn=args.outfile)
@@ -159,6 +165,8 @@ class JSdiagrammerMagics(Magics):
         fc = Flowchart.from_code(cell)
         diagram = JSDiagram({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
                             height=args.height)
+        if args.outfile:
+            diagram.save_html(args.outfile)
         return diagram
         #return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
         #             height=args.height, out_fn=args.outfile)
@@ -174,6 +182,8 @@ class JSdiagrammerMagics(Magics):
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
         diagram = JSDiagram({"src":cell}, TEMPLATE_WAVEDROM,
                             height=args.height)
+        if args.outfile:
+            diagram.save_html(args.outfile)
         return diagram
         #return js_ui({"src":cell}, TEMPLATE_WAVEDROM,
         #             height=args.height, out_fn=args.outfile)

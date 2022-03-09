@@ -115,7 +115,7 @@ erDiagram
 ![](images/js_diag_magic_mermaid3.png)
 
 ```text
-%wavesurfer_magic -fhttps://ia802606.us.archive.org/35/items/shortpoetry_047_librivox/abou_ben_adhem_hunt_mlb.mp3
+%wavesurfer_magic -f https://ia802606.us.archive.org/35/items/shortpoetry_047_librivox/abou_ben_adhem_hunt_mlb.mp3
 ```
 
 ![](images/js_diag_magicwavesurfer.png)
