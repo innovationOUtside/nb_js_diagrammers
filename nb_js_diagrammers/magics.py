@@ -127,10 +127,11 @@ class JSdiagrammerMagics(Magics):
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
-    def mermaid_magic(self, line, cell=None):
+    @needs_local_scope
+    def mermaid_magic(self, line, cell=None, local_ns=None):
         "Send code to mermaid.js."
         args = magic_arguments.parse_argstring(self.mermaid_magic, line)
-        src =  args.src.strip('"') if args.src else cell
+        src = eval(args.src, None, local_ns) if args.src else cell
         diagram = JSDiagram({"src":src.strip()}, TEMPLATE_MERMAIDJS, height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
@@ -146,10 +147,11 @@ class JSdiagrammerMagics(Magics):
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
-    def flowchart_magic(self, line, cell=None):
+    @needs_local_scope
+    def flowchart_magic(self, line, cell=None, local_ns=None):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.flowchart_magic, line)
-        src =  args.src if args.src else cell
+        src =  eval(args.src, None, local_ns) if args.src else cell
         diagram = JSDiagram({"src":src}, TEMPLATE_FLOWCHARTJS, height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
@@ -183,17 +185,19 @@ class JSdiagrammerMagics(Magics):
         #return js_ui({"src":str(fc.flowchart())}, TEMPLATE_FLOWCHARTJS,
         #             height=args.height, out_fn=args.outfile)
 
-    @cell_magic
+    @line_cell_magic
     @magic_arguments.magic_arguments()
     @magic_arguments.argument('--outfile', '-o', default=None, help='Output file.')
+    @magic_arguments.argument("--src", '-s', type=str, default=None, help='Source script.')
     @magic_arguments.argument(
         "--height", "-h", default="300", help="IFrame height."
     )
-    def wavedrom_magic(self, line, cell):
+    @needs_local_scope
+    def wavedrom_magic(self, line, cell=None, local_ns=None):
         "Send code to flowchart.js."
         args = magic_arguments.parse_argstring(self.wavedrom_magic, line)
-
-        diagram = JSDiagram({"src":cell}, TEMPLATE_WAVEDROM,
+        src =  eval(args.src, None, local_ns) if args.src else cell
+        diagram = JSDiagram({"src":src}, TEMPLATE_WAVEDROM,
                             height=args.height)
         if args.outfile:
             diagram.save_html(args.outfile)
