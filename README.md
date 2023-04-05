@@ -32,6 +32,8 @@ All magics support a `-o / --outfile` that can be used to specify the name of a 
  
 You can then generate diagrams using the appropriate diagram syntax and block magic.
 
+The `flowchart_magic` and `mermaid_magic` also act as line magics. Put the diagram script into a variabele (`my_script`) then call as `%mermaid_magic --src "$my_script" -h 1000` etc (the variable should be passed in quotes).
+
 __Note that for block magics, the code cell MUST start the `%%` - even blank lines and comment lines preceding the the block magic will raise an error.__
 
 ```text
