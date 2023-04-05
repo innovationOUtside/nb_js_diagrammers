@@ -27,12 +27,11 @@ Load the magics into a notebook using:
 
 `%load_ext nb_js_diagrammers`
 
-
 All magics support a `-o / --outfile` that can be used to specify the name of a generated html file that is then embedded in the notebook via an iframe. If no filename is specified, a filename with a randomly generated UID based will be created.
  
 You can then generate diagrams using the appropriate diagram syntax and block magic.
 
-The `flowchart_magic` and `mermaid_magic` also act as line magics. Put the diagram script into a variabele (`my_script`) then call as `%mermaid_magic --src "$my_script" -h 1000` etc (the variable should be passed in quotes).
+The `flowchart_magic` and `mermaid_magic` also act as line magics. Put the diagram script into a variable (`my_script`) then call as `%mermaid_magic --src "$my_script" -h 1000` etc (the variable should be passed in quotes).
 
 __Note that for block magics, the code cell MUST start the `%%` - even blank lines and comment lines preceding the the block magic will raise an error.__
 
